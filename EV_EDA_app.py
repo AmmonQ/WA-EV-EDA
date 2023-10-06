@@ -19,7 +19,7 @@ truck_vehicles = dataframe[dataframe['Vehicle Primary Use'] == 'Truck']
 passenger_vehicles[passenger_vehicles['County'] == 'King'].sort_values('Date')
 passenger_vehicles_physically_located_in_wa = passenger_vehicles[passenger_vehicles['State'] == 'WA']
 st.write("EVs Registered in WA physically located in WA")
-st.write(passenger_vehicles_physically_located_in_wa)
+# st.write(passenger_vehicles_physically_located_in_wa)
 
 graph1 = sns.lineplot(data=passenger_vehicles_physically_located_in_wa.groupby(['Date'])['Electric Vehicle (EV) Total'].sum().reset_index(name = 'Total EVs Registered'), y="Total EVs Registered", x="Date")
 graph1.set_title("Electric Vehicle (EV) Registration by Date in Entire WA State")
