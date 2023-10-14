@@ -77,3 +77,42 @@ st.write(user_query)
 user_query2 = passenger_vehicles_physically_located_in_wa[(passenger_vehicles_physically_located_in_wa['County'] == select_county)]
 total_ev_sum = user_query2['Electric Vehicle (EV) Total'].sum()
 st.write("Total EVs Registered in County: ", total_ev_sum)
+
+
+st.write("Predict how many EVs in WA State will be registered by projected date (use the format YYYY-MM-31 00:00:00)")
+
+# predict how many EVs will be registered. Relevant columns are Date, County, and Electric Vehicle (EV) Total
+# use linear regression to predict the number of EVs registered in the future
+from sklearn.linear_model import LinearRegression
+
+# Independent variables: Date, County
+# Dependent variable: Electric Vehicle (EV) Total
+X = passenger_vehicles_physically_located_in_wa[['Date', 'County']]
+y = passenger_vehicles_physically_located_in_wa['Electric Vehicle (EV) Total']
+
+# convert Date and County to numerical values
+from sklearn.preprocessing import LabelEncoder
+le = LabelEncoder()
+X['Date'] = le.fit_transform(X['Date'])
+X['County'] = le.fit_transform(X['County'])
+
+model = LinearRegression().fit(X, y)
+r_sq = model.score(X, y)
+
+month_input = st.text_input("Enter a projected date")
+county_input = st.selectbox(
+    'County',
+    passenger_vehicles_physically_located_in_wa['County'].sort_values().unique()
+)
+
+X_new = pd.DataFrame({'Date': [month_input, '2025-10-31 00:00:00', '2026-10-31 00:00:00', '2027-09-31 00:00:00', '2028-11-31 00:00:00'], 'County': [county_input, 'Garfield', 'King', 'Pierce', 'Snohomish']})
+
+# st.write(X_new)
+
+X_new['Date'] = le.fit_transform(X_new['Date'])
+X_new['County'] = le.fit_transform(X_new['County'])
+
+# st.write(X_new)
+
+y_pred_new = model.predict(X_new)
+st.write(y_pred_new[0])
