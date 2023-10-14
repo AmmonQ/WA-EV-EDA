@@ -79,7 +79,7 @@ total_ev_sum = user_query2['Electric Vehicle (EV) Total'].sum()
 st.write("Total EVs Registered in County: ", total_ev_sum)
 
 
-st.write("Predict how many EVs in WA State will be registered by projected date (use the format YYYY-MM-31 00:00:00)")
+st.write("Predict how many EVs in WA State will be registered by projected date (use the format YYYY-MM-31 00:00:00 ex: 2025-05-31 00:00:00). The date formatting is still something I'm working on")
 
 # predict how many EVs will be registered. Relevant columns are Date, County, and Electric Vehicle (EV) Total
 # use linear regression to predict the number of EVs registered in the future
